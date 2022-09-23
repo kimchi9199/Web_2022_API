@@ -4,8 +4,10 @@
 
 import express from "express"
 import {Introduce} from "../controllers/clothesshopprocess.js";
+import {ListProduct}  from "../controllers/product_process.js";
 
 const router = express.Router();
 router.get('/info', Introduce);
+router.get('/products',ListProduct);
 
 export default router;
