@@ -1,7 +1,7 @@
-let MONGODB_URL = 'mongodb+srv://KimLe:kimle123@cluster0.c6nnpzt.mongodb.net/?retryWrites=true&w=majority';// declare a variable
+let MONGODB_URL = 'mongodb+srv://KimLe:kimle123@cluster0.c6nnpzt.mongodb.net/KimLeStudio';// declare a variable
 let APIROOT_URL = 'http://localhost:3000/';
 
-module.exports = {
+let mongoConnection = {
     https: false,
     appname: 'ClothesShop.',
     port: process.env.PORT || 3000,
@@ -18,3 +18,4 @@ module.exports = {
         username: ''
     }
 }
+export default mongoConnection;
