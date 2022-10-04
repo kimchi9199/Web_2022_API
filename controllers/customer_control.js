@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import Customer from "../models/customer.js";
 
 export const CreateCustomer = async (req, res) => {

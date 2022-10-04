@@ -1,4 +1,5 @@
-const Mongoose  = require ('mongoose');
+import Mongoose from "mongoose";
+// const Mongoose  = require ('mongoose'); = line 1 to import mongoose
 
 let Schema = Mongoose.Schema;
 
@@ -36,12 +37,10 @@ let CustomerSchema = new Schema({
     },
     CusAddress:{
         type: String,
-        unique: true,
         required: true
     },
     CusBdate:{
         type: Date,
-        unique: true,
         required: true
     },
     CusPoint:{
@@ -54,4 +53,4 @@ let CustomerSchema = new Schema({
 // Chua co reference
 // associatedWith
 
-module.exports = Mongoose.model('customer', CustomerSchema);
+export default Mongoose.model('Customer', CustomerSchema);
