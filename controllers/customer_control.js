@@ -22,3 +22,22 @@ export const CreateCustomer = async (req, res) => {
             });
         });
 }
+
+export  function getAllCustomer(req, res) {
+    Customer.find()
+        // .select('CusName CusUserName')
+        .then((allCustomer) => {
+            return res.status(200).json ({
+                success : true,
+                message : "A list of all Customer",
+                Customer : allCustomer,
+            });
+        })
+        .catch((err) => {
+            res.status(500).json({
+                success : false,
+                message : 'Server error. Please try again.',
+                error : err.message,
+            });
+    });
+}
