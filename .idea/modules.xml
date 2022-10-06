@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../Web_2022-API-NodeJS-/.idea/Web_2022-API-NodeJS-.iml" filepath="$PROJECT_DIR$/../Web_2022-API-NodeJS-/.idea/Web_2022-API-NodeJS-.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/Web_2022_API.iml" filepath="$PROJECT_DIR$/.idea/Web_2022_API.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Web_development_2022_UI/.idea/Web_development_2022_UI.iml" filepath="$PROJECT_DIR$/../Web_development_2022_UI/.idea/Web_development_2022_UI.iml" />
     </modules>
   </component>
 </project>

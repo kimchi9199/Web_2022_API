@@ -8,5 +8,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="Web_2022-API-NodeJS-" />
+    <orderEntry type="module" module-name="Web_development_2022_UI" />
   </component>
 </module>
