@@ -1,6 +1,10 @@
 import mongoose from "mongoose";
 import Customer from "../models/customer.js";
-import e from "express";
+import bcrypt from 'bcryptjs';
+import * as CustomerManagement from '../Management/CustomerManagement.js';
+import JsonWebToken from 'jsonwebtoken';
+import * as Rest from '../utils/Rest.js';
+import MongoConfig from '../config/MongoDBConfig.js';
 
 export const CreateCustomer = async (req, res) => {
    const newCustomer = new Customer(req.body) // create new object from info from body we sent
@@ -39,5 +43,24 @@ export  function getAllCustomer(req, res) {
                 message : 'Server error. Please try again.',
                 error : err.message,
             });
+    });
+}
+
+export function Login (req, res) {
+    let LoginName = req.body.LoginName || '';
+    let Password = req.body.Password || '';
+    CustomerManagement.Authenticate(LoginName, Password, function (ErrorCode, ErrorMess, httpCode, ErrorDescript, customer) {
+        if (ErrorCode) {
+            return Rest.SendError(res, ErrorCode, ErrorMess, httpCode, ErrorDescript);
+        }
+
+        JsonWebToken.sign({id: customer._id, LoginName: customer.LoginName}, MongoConfig.authenticationkey, {expiresIn: '10 days'}, function(error, token) {
+            if(error) {
+                return Rest.SendError(res, 1, 'Creating Token Failed', 400, error);
+            }
+            else{
+                return Rest.SendSuccessToken(res, token, customer);
+            }
+        });
     });
 }

@@ -12,7 +12,8 @@ router.get('/products',ListProduct);
 
 export default router;
 /// import from customer_controller
-import {CreateCustomer, getAllCustomer} from '../controllers/customer_control.js'
+import {CreateCustomer, getAllCustomer, Login} from '../controllers/customer_control.js'
 router.post('/newCustomer', CreateCustomer);
 router.get('/listCustomer', getAllCustomer);
+router.post('/login', Login)
 
