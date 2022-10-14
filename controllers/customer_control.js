@@ -1,13 +1,14 @@
 import mongoose from "mongoose";
 import Customer from "../models/customer.js";
-import bcrypt from 'bcryptjs';
 import * as CustomerManagement from '../Management/CustomerManagement.js';
 import JsonWebToken from 'jsonwebtoken';
 import * as Rest from '../utils/Rest.js';
 import MongoConfig from '../config/MongoDBConfig.js';
-
+import bcryptjs from 'bcryptjs'
 export const CreateCustomer = async (req, res) => {
    const newCustomer = new Customer(req.body) // create new object from info from body we sent
+    let encryptedPass = await bcryptjs.hash(req.body.CusPass, 10);
+   newCustomer.CusPass = encryptedPass;
     return newCustomer
         .save()
         .then((newCus) => {
@@ -47,14 +48,14 @@ export  function getAllCustomer(req, res) {
 }
 
 export function Login (req, res) {
-    let LoginName = req.body.LoginName || '';
-    let Password = req.body.Password || '';
-    CustomerManagement.Authenticate(LoginName, Password, function (ErrorCode, ErrorMess, httpCode, ErrorDescript, customer) {
+    let CusUserName = req.body.CusUserName || '';
+    let CusPass = req.body.CusPass || '';
+    CustomerManagement.Authenticate(CusUserName, CusPass, function (ErrorCode, ErrorMess, httpCode, ErrorDescript, customer) {
         if (ErrorCode) {
             return Rest.SendError(res, ErrorCode, ErrorMess, httpCode, ErrorDescript);
         }
 
-        JsonWebToken.sign({id: customer._id, LoginName: customer.LoginName}, MongoConfig.authenticationkey, {expiresIn: '10 days'}, function(error, token) {
+        JsonWebToken.sign({id: customer._id, CusUserName: customer.CusUserName}, MongoConfig.authenticationkey, {expiresIn: '10 days'}, function(error, token) {
             if(error) {
                 return Rest.SendError(res, 1, 'Creating Token Failed', 400, error);
             }

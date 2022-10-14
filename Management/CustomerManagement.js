@@ -4,23 +4,23 @@ import Customer from '../models/customer.js'
 import bcrypt  from "bcryptjs";
 
 
-export function Authenticate (LoginName, Password, callback) {
+export function Authenticate (CusUserName, CusPass, callback) {
     try {
-        if(!Utils.VariableTypeChecker(LoginName, 'string')){
+        if(!Utils.VariableTypeChecker(CusUserName, 'string')){
             return callback(8, "invalid login name", 422, "Your login name is not a string", null);
         }
 
-        if(!Utils.VariableTypeChecker(Password, 'string')){
+        if(!Utils.VariableTypeChecker(CusPass, 'string')){
             return callback(8, 'invalid password', 422, 'Your password is not a string', null);
         }
 
-        Customer.findOne( {LoginName: LoginName}, function (error, customer) {
+        Customer.findOne( {CusUserName: CusUserName}, function (error, customer) {
             if (error) {
                 return callback(8, 'Not found', 420, error, null);
             }
 
             if(customer) {
-                bcrypt.compare(Password, customer.Password, function (error, result) {
+                bcrypt.compare(CusPass, customer.CusPass, function (error, result) {
                     if (result === true) {
                         return callback(null, null, 200, null, customer);
                     }
