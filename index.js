@@ -11,7 +11,7 @@ Mongoose.connect(MongoConfig.mongodb.uri)
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+//app.use(cors());
 app.all('/*', AllowCrossDomain);
 app.use(Router);
 
