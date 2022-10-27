@@ -2,7 +2,7 @@
 // CORS related  http://stackoverflow.com/questions/7067966/how-to-allow-cors-in-express-nodejs
 export function AllowCrossDomain(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Credentials', 'true');
+    res.header('Access-Control-Allow-Credentials', 'false');
     res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, HEAD, PATCH, OPTIONS');
     res.header('Access-Control-Expose-Headers', 'Content-Length, X-Access-Token');
     res.header('Access-Control-Allow-Headers', 'Accept, Authorization, Content-Type, Content-Length, Content-Language, X-Requested-With, Range, Origin, X-Access-Token');
