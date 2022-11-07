@@ -1,19 +1,40 @@
 // basic process => return info
 // f/b was build dependencies, use API to connect
 import { createRequire } from "module";
+import Product from "../models/Product.js";
 
 const require = createRequire(import.meta.url);
 // back previous a folder
 const proinfo = require("../data/product_info.json") ;
 
 //export to export function for others to use
-export const ListProduct = async (req,res) => {
-    try
-    {
-        res.send(proinfo);
-    }
-    catch (error)
-    {
-        console.log(error);
-    }
+// get all product
+// export const ListProduct = async (req,res) => {
+//     try
+//     {
+//         res.send(proinfo);
+//     }
+//     catch (error)
+//     {
+//         console.log(error);
+//     }
+// }
+
+export function getAllProduct(req, res) {
+    Product.find()
+        .then((allProduct) => {
+            return res.status(200).json ({
+                success : true,
+                message : "List of all Product",
+                Product : allProduct,
+            });
+        })
+        .catch((err) => {
+            res.status(500).json ({
+                success : false,
+                message : 'Server error. Please try again.',
+                error : err.message,
+            });
+    });
 }
+
