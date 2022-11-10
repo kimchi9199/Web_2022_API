@@ -1,4 +1,4 @@
-let MONGODB_URL = 'mongodb+srv://KimLe:kimle123@cluster0.c6nnpzt.mongodb.net/KimLeStudio';// declare a variable
+let MONGODB_URL = 'mongodb+srv://KimLe:kimle123@cluster0.c6nnpzt.mongodb.net/JewelryStore';// declare a variable
 let APIROOT_URL = 'http://localhost:3000/';
 
 let mongoConnection = {

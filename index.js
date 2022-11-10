@@ -15,6 +15,7 @@ app.use(cors());
 app.use(Router);
 app.use(Product_Router);
 
-let port = process.env.PORT || 3000;
-app.listen(port, () => console.log('Server running at http://localhost:3000'));
+// let port = process.env.PORT || 3000;
+let port = 3001
+app.listen(port, () => console.log(`Server running at http://localhost:${port}`));
 

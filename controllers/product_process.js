@@ -38,3 +38,28 @@ export function getAllProduct(req, res) {
     });
 }
 
+export function getProductByMaterial(req, res)  {
+    try{
+        let material = req.params.Material;
+         Product.find({
+             Material: material
+         }).then((product) => {
+             return (
+                 res.status(200).json({
+                 success: true,
+                 message: `Our ${material} products`,
+                 product: product
+                })
+             )
+         }).catch((error) => {
+             res.status(500).json({
+                 success: false,
+                 message: "Not found",
+                 error: error.message
+             })
+         })
+    } catch (error) {
+        res.status(404).send(error)
+    }
+}
+
