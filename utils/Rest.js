@@ -18,14 +18,15 @@ export function SendSuccessToken (res, token, user) {
 
 }
 
-export function SendError (res, code, mess, httpCode, description, error) {
+export function SendError (res, code, message, httpCode, description, error) {
     if (!res) {
         return;
     }
 
     let output = {};
+    output.success = false;
     output.code = code;
-    output.mess = mess ? mess.toString() : "Unidentified error";
+    output.message = message ? message.toString() : "Unidentified error";
 
     if(description) {
         output.description = description.toString();
@@ -40,4 +41,24 @@ export function SendError (res, code, mess, httpCode, description, error) {
     res.status(status);
     res.contentType('json');
     return res.json(output);
+}
+
+export function SendSuccess (res, data, iHttpCode, message) {
+    if(!res) {
+        return;
+    }
+
+    let HttpStatus = iHttpCode ? iHttpCode : 200;
+    let out = {
+        "success": true,
+        "message": message
+    };
+
+    if(data) {
+        out.data = data;
+    }
+
+    res.status(HttpStatus);
+    res.contentType('json');
+    return res.json(out);
 }

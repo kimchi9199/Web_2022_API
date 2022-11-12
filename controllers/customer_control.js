@@ -5,6 +5,9 @@ import JsonWebToken from 'jsonwebtoken';
 import * as Rest from '../utils/Rest.js';
 import MongoConfig from '../config/MongoDBConfig.js';
 import bcryptjs from 'bcryptjs'
+import Validator from 'validator';
+
+
 export const CreateCustomer = async (req, res) => {
    const newCustomer = new Customer(req.body) // create new object from info from body we sent
     let encryptedPass = await bcryptjs.hash(req.body.CusPass, 10);
@@ -20,8 +23,9 @@ export const CreateCustomer = async (req, res) => {
         })
         .catch((error) => {
             console.log(error);
-            res.status(500).json({
+            return res.status(500).json({
                 success : false,
+                code: 8,
                 message : "Save fail",
                 error: error.message,
             });
@@ -41,6 +45,7 @@ export  function getAllCustomer(req, res) {
         .catch((err) => {
             res.status(500).json({
                 success : false,
+                code: 8,
                 message : 'Server error. Please try again.',
                 error : err.message,
             });
@@ -64,4 +69,73 @@ export function Login (req, res) {
             }
         });
     });
+}
+
+export function GetCustomerById(req, res){
+    let accessCustomerId = req.query.accessCustomerId || '';
+    const id = req.params.CustomerID;
+
+    if(!Validator.isMongoId(id)) {
+        return res.status(400).json({
+            "success": false,
+            "code": 8,
+            "message": "Invalid user id",
+            "description": "The inputted user id is in wrong format"
+        })
+    }
+
+    if (accessCustomerId != id) {
+        return res.status(403).json({
+            "success": false,
+            "code": 9,
+            "message": "Not available",
+            "description": "This content is not available"
+        })
+    }
+    Customer.findById(id)
+        .then((customer) => {
+            return res.status(200).json({
+                success: true,
+                message: `Found one user with id: ${id}`,
+                customer: customer,
+            });
+        })
+        .catch((err) => {
+            return res.status(500).json({
+                success: false,
+                code: 8,
+                message: 'Not Found.',
+                description: err.message,
+            });
+        });
+}
+
+export function DeleteUser (req, res) {
+    let CustomerID = req.params.CustomerID || '';
+    let accessCustomerId = req.query.accessCustomerId || '';
+    CustomerManagement.Delete(accessCustomerId, CustomerID, function (errorCode, errorMessage, httpCode, errorDescription) {
+        if (errorCode) {
+            return Rest.SendError(res, errorCode, errorMessage, httpCode, errorDescription);
+        }
+        let ResultData = {};
+        ResultData.id = UserID;
+        return Rest.SendSuccess(res, ResultData, httpCode, "Deleted a customer");
+    });
+}
+
+export function UpdateUser (req, res){
+
+    let AccessCustomerId = req.body.accessCustomerId || '';
+    let id = req.params.CustomerID || '';
+    let data = req.body || '';
+
+    CustomerManagement.Update(AccessCustomerId, id, data, function(errorCode, errorMessage, httpCode, errorDescription, result){
+        if(errorCode){
+            return Rest.SendError(res, errorCode, errorMessage, httpCode, errorDescription);
+        }
+        let outResultData = {};
+        outResultData.id = result._id;
+        return Rest.SendSuccess(res, outResultData, httpCode, "Updated a customer");
+    });
+
 }
