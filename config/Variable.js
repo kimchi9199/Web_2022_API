@@ -1,0 +1,1 @@
+const ORDER_STATUS = ["Not Paid", "Paid", "Canceled"]

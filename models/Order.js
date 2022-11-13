@@ -8,7 +8,8 @@ let OrderSchema = new Schema({
         type: String
     },
     Status:{
-        type: String
+        type: String,
+        default: "Not Pay"
     },
     OrderDate:{
         type: Date,
@@ -18,7 +19,7 @@ let OrderSchema = new Schema({
         type: Date
     },
     TotalCost: {
-        type: Double
+        type: Number
     }
 })
 

@@ -91,6 +91,62 @@ export async function AddProductToCart (req, res) {
 }
 
 
+export async function DeleteProductOutOfCart (req, res) {
+    let AccessCustomerID = req.query.accessCustomerId;
+    let CartOfCustomer = new Cart();
+    let cartDetail = new  CartDetail();
+    let ProductID = req.params.ProductID;
+    Cart.find({
+        CustomerID: AccessCustomerID
+    })
+        .then(cart => {
+            CartOfCustomer = cart
+        })
+        .catch((err) => {
+            return res.status(500).json ({
+                success: false,
+                message: 'cannot find your cart.',
+                error: err.message
+            })
+        })
+
+    cartDetail.CartID = CartOfCustomer._id;
+    cartDetail.ProductID = ProductID;
+
+    CartDetail.findOne({CartID:  cartDetail.CartID, ProductID: cartDetail.ProductID}, function(error, product) {
+        if(error) {
+            return (
+                res.status(409).send({
+                    success: false,
+                    code: 7,
+                    message: "Something went wrong",
+                    description: "This product is not in your cart"
+
+                })
+            )
+        }
+        if(product) {
+            product.remove(function(error) {
+                if(error) {
+                    res.status(409).send({
+                        success: false,
+                        code: 7,
+                        message: "Something went wrong",
+                        description: "Can not remove this product out of your cart"
+
+                    })
+                }
+                return res.status(200).json ({
+                    success : true,
+                    message : "deleted a product out of your cart",
+                    Product : product,
+                });
+            })
+        }
+    })
+
+}
+
 export function getAllProduct(req, res) {
     Product.find()
         .then((allProduct) => {

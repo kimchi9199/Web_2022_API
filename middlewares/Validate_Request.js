@@ -30,8 +30,8 @@ export function ValidateForCustomer(req, res, next) {
                         req.query.accessCusUserName = decoded.CusUserName;
                     }
                     else {
-                        req.query.accessCustomerId = decoded.id;
-                        req.query.accessCusUserName = decoded.CusUserName;
+                        req.body.accessCustomerId = decoded.id;
+                        req.body.accessCusUserName = decoded.CusUserName;
                     }
                     next();
                 });
@@ -70,8 +70,8 @@ export function ValidateForManager(req, res, next) {
                         req.query.accessMUserName = decoded.accessMUserName;
                     }
                     else {
-                        req.query.accessManagerId = decoded.id;
-                        req.query.accessMUserName = decoded.accessMUserName;
+                        req.body.accessManagerId = decoded.id;
+                        req.body.accessMUserName = decoded.accessMUserName;
                     }
                     next();
                 });
@@ -109,8 +109,8 @@ export function ValidateForEmployee(req, res, next) {
                         req.query.accessEUserName = decoded.accessEUserName;
                     }
                     else {
-                        req.query.accessEmployeeId = decoded.id;
-                        req.query.accessEUserName = decoded.accessEUserName;
+                        req.body.accessEmployeeId = decoded.id;
+                        req.body.accessEUserName = decoded.accessEUserName;
                     }
                     next();
                 });

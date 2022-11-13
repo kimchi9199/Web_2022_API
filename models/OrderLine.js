@@ -11,6 +11,9 @@ let OrderLineSchema = new Schema({
     },
     Quantity: {
         type: Number
+    },
+    Cost: {
+        type: Number
     }
 })
 
