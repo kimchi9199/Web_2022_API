@@ -10,7 +10,8 @@ let CartDetailSchema = new Schema({
         type: String
     },
     Quantity: {
-        type: Number
+        type: Number,
+        default: 1
     }
 })
 

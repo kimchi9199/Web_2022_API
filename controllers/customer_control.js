@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import Customer from "../models/customer.js";
+import Cart from '../models/Cart.js'
 import * as CustomerManagement from '../Management/CustomerManagement.js';
 import JsonWebToken from 'jsonwebtoken';
 import * as Rest from '../utils/Rest.js';
@@ -110,7 +111,7 @@ export function GetCustomerById(req, res){
         });
 }
 
-export function DeleteUser (req, res) {
+export function DeleteCustomer (req, res) {
     let CustomerID = req.params.CustomerID || '';
     let accessCustomerId = req.query.accessCustomerId || '';
     CustomerManagement.Delete(accessCustomerId, CustomerID, function (errorCode, errorMessage, httpCode, errorDescription) {
@@ -123,7 +124,7 @@ export function DeleteUser (req, res) {
     });
 }
 
-export function UpdateUser (req, res){
+export function UpdateCustomer (req, res){
 
     let AccessCustomerId = req.body.accessCustomerId || '';
     let id = req.params.CustomerID || '';

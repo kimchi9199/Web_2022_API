@@ -16,6 +16,9 @@ let ProductSchema = new Schema({
     },
     Img_link : {
         type: String
+    },
+    InStock: {
+        type: Number
     }
 })
 

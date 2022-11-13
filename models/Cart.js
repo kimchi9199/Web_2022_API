@@ -3,8 +3,12 @@ import Mongoose from "mongoose";
 let Schema = Mongoose.Schema;
 
 let CartSchema = new Schema({
+    CustomerID: {
+        type: String
+    },
     CreatedDate:{
-        type: Date
+        type: Date,
+        default: Date.now
     }
 })
 
